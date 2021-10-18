@@ -4,10 +4,10 @@
 [CmdletBinding()] 
 Param 
 ( 
-[ Parameter (Mandatory = $false, Position = 0 ) ] $Scriptpath = "C:\Users\siris\Desktop\Some\Selenium\Update Naukri Profile",
+[ Parameter (Mandatory = $false, Position = 0 ) ] $Scriptpath = 'C:\Users\siris\Desktop\Some\Selenium\Update Naukri Profile',
 [ Parameter (Mandatory = $false, Position = 1 ) ] $WebDriverdll = "$Scriptpath\Requirements\WebDriver.dll",
 [ Parameter (Mandatory = $false, Position = 2 ) ] $Username = "raghuwanshideepak79.dr@gmail.com",
-[ Parameter (Mandatory = $false, Position = 3 ) ] $password = "$Scriptpath\Requirements\Secret.Credential",
+[ Parameter (Mandatory = $false, Position = 3 ) ] $password = "$Scriptpath\Secret.Credential",
 [ Parameter (Mandatory = $false, Position = 4 ) ] $LogFile = "$Scriptpath\NaukriUpdateLogs.txt",
 [ Parameter (Mandatory = $false, Position = 5 ) ] $ResumePath = "$Scriptpath\Resume\Deepak Raghuwanshi.pdf"
 
@@ -124,7 +124,7 @@ Function Validate-Page {
   Param 
   ( 
     [ Parameter (Mandatory = $true, Position = 0 ) ] [string] $PageTitle,
-    [ Parameter (Mandatory = $true, Position = 1 ) ] $Instance = $Instance,
+    [ Parameter (Mandatory = $false, Position = 1 ) ] $Instance = $Instance,
     [ Parameter (Mandatory = $false, Position = 2 ) ] [int] $Maxrun = 7,
     [ Parameter (Mandatory = $false, Position = 3 ) ] [int] $Run = 2,
     [ Parameter (Mandatory = $false, Position = 4 ) ] [Bool] $Ispass = $False
@@ -141,9 +141,9 @@ Function Validate-Page {
   
       $Run += 2
       
-      if($Instance.Title -like $($PageTitle+"*"))
+      if($($Instance.Title) -like $($PageTitle+"*"))
       {
-        Write-Logs -LogLine "Page Validation Suceesfull - $Instance.Title"
+        Write-Logs -LogLine "Page Validation Suceesfull - $($Instance.Title)"
         $Ispass = $true;
         $Run = 10
       }
@@ -207,15 +207,17 @@ Function Update-Resume {
 
   while($Time -le $MaxTime){
     
-    if($(Get-LastUpdate -Resume -Instance $Instance ) -ne $LastUpdate){
-          Write-Logs -LogLine "Succefully Updated Resume On - $(Get-LastUpdate -Resume -Instance $Instance)"; Return $True
+    $FinalStatus = Get-LastUpdate -Resume -Instance $Instance
+
+    if($FinalStatus-ne $LastUpdate){
+          Write-Logs -LogLine "Succefully Updated Resume On - $FinalStatus "; Return $True
     }
 
     Start-Sleep -Seconds 2;
     $Time += 2;
   }
 
-  Write-Logs -LogLine "Failed to Updated Resume";
+  Write-Logs -LogLine "Failed to Updated Resume where - Final Status > $FinalStatus";
 
   Return $false
 
@@ -243,7 +245,7 @@ Function Destroy-Instance{
 
 #endregion
 
-Write-Logs -LogLine "Starting Update Naukri Script"
+Write-Logs -LogLine "`n `nStarting Update Naukri Script #################################################################"
 #$password = Get-Content -Path "$password" -ErrorAction Stop
 
 #region Main Flow
