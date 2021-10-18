@@ -4,11 +4,12 @@
 [CmdletBinding()] 
 Param 
 ( 
-[ Parameter (Mandatory = $false, Position = 0 ) ] $WebDriverdll = "C:\Users\siris\Desktop\Some\Selenium\Update Naukri Profile\Requirements\WebDriver.dll",
-[ Parameter (Mandatory = $false, Position = 1 ) ] $Username = "raghuwanshideepak79.dr@gmail.com",
-[ Parameter (Mandatory = $false, Position = 2 ) ] $password = "C:\Users\siris\Desktop\Some\Selenium\Update Naukri Profile\Secret.Credential",
-[ Parameter (Mandatory = $false, Position = 3 ) ] $LogFile = "C:\Users\siris\Desktop\Some\Selenium\Update Naukri Profile\NaukriUpdateLogs.txt",
-[ Parameter (Mandatory = $false, Position = 4 ) ] $ResumePath = "C:\Users\siris\Desktop\Some\Selenium\Update Naukri Profile\Resume\Deepak Raghuwanshi.pdf"
+[ Parameter (Mandatory = $false, Position = 0 ) ] $Scriptpath = "C:\Users\siris\Desktop\Some\Selenium\Update Naukri Profile",
+[ Parameter (Mandatory = $false, Position = 1 ) ] $WebDriverdll = "$Scriptpath\Requirements\WebDriver.dll",
+[ Parameter (Mandatory = $false, Position = 2 ) ] $Username = "raghuwanshideepak79.dr@gmail.com",
+[ Parameter (Mandatory = $false, Position = 3 ) ] $password = "$Scriptpath\Secret.Credential",
+[ Parameter (Mandatory = $false, Position = 4 ) ] $LogFile = "$Scriptpath\NaukriUpdateLogs.txt",
+[ Parameter (Mandatory = $false, Position = 5 ) ] $ResumePath = "$Scriptpath\Resume\Deepak Raghuwanshi.pdf"
 
 )
 
@@ -19,8 +20,6 @@ if(!$WebDriverdll -or !$Username -or !$password -or !$LogFile -or !$ResumePath )
 }
 
 $ErrorActionPreference = "Stop"
-
-Write-Logs -LogLine "Starting Update Naukri Script"
 
 Import-Module "$WebDriverdll" -ErrorAction Stop
 
@@ -59,17 +58,19 @@ Function Create-Instance {
   {
     #Load Chrome Driver
     $Instance = New-Object OpenQA.Selenium.Chrome.ChromeDriver -ErrorAction Stop;
-    
+    Write-Logs -LogLine "Opening Chrome"
   }
   else
   {
     $Instance = New-Object OpenQA.Selenium.Edge.EdgeDriver -ErrorAction Stop;      
-    
+    Write-Logs -LogLine "Opening Edge"
   }
   
   #Set the Wait for the Element to load, Before throwing Exception
   $Instance.Manage().Timeouts().ImplicitWait = (New-TimeSpan -Hours 0 -Minutes 0 -Seconds $WaitTimeinSec);
   $Instance.manage().Window.minimize()
+
+  Write-Logs -LogLine "Minimizing Browzer"
 
   return $Instance
 }
@@ -90,6 +91,7 @@ Function Open-Webpage {
     return $Help
   }
 
+  Write-Logs -LogLine "Loading Addreess- $URL"
   $Instance.Navigate().GoToUrl("$URL")
 
   Return $true
@@ -113,7 +115,7 @@ Function Sign-In {
     ($Instance.FindElementById('usernameField')).SendKeys("$Site_Username")
     ($Instance.FindElementById('passwordField')).SendKeys("$Site_Secretkey")
     $Instance.FindElementByTagName('button').Click()
-    
+    Write-Logs -LogLine "Login Suceess"
     Return $True
 }
 
@@ -130,7 +132,9 @@ Function Validate-Page {
 
   if($PageTitle -eq "" -or $PageTitle -eq $null)
   {
-     Return $Ispass
+     
+      Write-Logs -LogLine "Page Validation Failed - $PageTitle"
+      Return $Ispass
   }
   
   While ($Run -le $Maxrun){
@@ -139,6 +143,7 @@ Function Validate-Page {
       
       if($Instance.Title -like $($PageTitle+"*"))
       {
+        Write-Logs -LogLine "Page Validation Suceesfull - $Instance.Title"
         $Ispass = $true;
         $Run = 10
       }
@@ -160,6 +165,8 @@ Function Update-Profile{
     Start-Sleep -Milliseconds 400;
     $Instance.FindElementsById('saveBasicDetailsBtn').Click();
 
+    Write-Logs -LogLine "Update Profile"
+
 }
 
 Function Get-LastUpdate{
@@ -167,13 +174,13 @@ Function Get-LastUpdate{
   [CmdletBinding()] 
   Param 
   ( 
-    [ Parameter (Mandatory = $true, Position = 1 ) ] $Instance = $Instance,
+    [ Parameter (Mandatory = $false, Position = 1 ) ] $Instance = $Instance,
     [Switch] $Resume
   )
 
    if($Resume)
    {
-    Return $($Instance.FindElementByXPath(('//*[contains(@class, "updateOn")]')))
+    Return $($Instance.FindElementByXPath(('//*[contains(@class, "updateOn")]')).Text)
    }
    
    Return $(($Instance.FindElementsByXPath('//span [@class="fw700"]')).Text)
@@ -185,13 +192,13 @@ Function Update-Resume {
   [CmdletBinding()] 
   Param 
   ( 
-    [ Parameter (Mandatory = $true, Position = 0 ) ] $Instance = $Instance,
+    [ Parameter (Mandatory = $false, Position = 0 ) ] $Instance = $Instance,
     [ Parameter (Mandatory = $false, Position = 1 ) ] $ResumePath = $ResumePath,
-    [ Parameter (Mandatory = $false, Position = 1 ) ] $MaxTime = 10
+    [ Parameter (Mandatory = $false, Position = 2 ) ] $MaxTime = 10
   )
 
   
-  $LastUpdate = Get-LastUpdate -Resume 
+  $LastUpdate = Get-LastUpdate -Instance $Instance -Resume
   Write-Logs -LogLine "Last Updated Resume On - $LastUpdate"
 
   ($Instance.FindElementByXPath('//*[@id="attachCV"]') ).SendKeys("$ResumePath")
@@ -200,8 +207,8 @@ Function Update-Resume {
 
   while($Time -le $MaxTime){
     
-    if($(Get-LastUpdate -Resume ) -ne $LastUpdate){
-          Write-Logs -LogLine "Succefully Updated Resume On - $(Get-LastUpdate -Resume)"; Return $True
+    if($(Get-LastUpdate -Resume -Instance $Instance ) -ne $LastUpdate){
+          Write-Logs -LogLine "Succefully Updated Resume On - $(Get-LastUpdate -Resume -Instance $Instance)"; Return $True
     }
 
     Start-Sleep -Seconds 2;
@@ -229,13 +236,14 @@ Function Destroy-Instance{
   }
   
   $Instance.Quit()
-
+  Write-Logs -LogLine "Browser Session Destroyed"
   Return $true
 
 }
 
 #endregion
 
+Write-Logs -LogLine "Starting Update Naukri Script"
 #$password = Get-Content -Path "$password" -ErrorAction Stop
 
 #region Main Flow
@@ -275,6 +283,8 @@ if(!(Validate-Page -PageTitle "Profile |" -Instance $Instance))
      #Validated Refreshed Profile Page
      Throw "Update Failed, Unexpected Web Page - $($Instance.Title)"
 }
+
+Update-Resume -Instance $Instance;
 
 $Updated_Time = Get-LastUpdate -Instance $Instance
 Write-Logs -LogLine "Current Status - $Updated_Time"
