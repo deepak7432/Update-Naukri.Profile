@@ -4,11 +4,11 @@
 [CmdletBinding()] 
 Param 
 ( 
-[ Parameter (Mandatory = $false, Position = 0 ) ] $Scriptpath = 'C:\Users\siris\Desktop\Some\Selenium\Update Naukri Profile',
+[ Parameter (Mandatory = $false, Position = 0 ) ] $Scriptpath = 'C:\deepak_workspace\Update-Naukri.Profile',
 [ Parameter (Mandatory = $false, Position = 1 ) ] $WebDriverdll = "$Scriptpath\Requirements\WebDriver.dll",
 [ Parameter (Mandatory = $false, Position = 2 ) ] $Username = "raghuwanshideepak79.dr@gmail.com",
-[ Parameter (Mandatory = $false, Position = 3 ) ] $password = "$Scriptpath\Secret.Credential",
-[ Parameter (Mandatory = $false, Position = 4 ) ] $LogFile = "$Scriptpath\NaukriUpdateLogs.txt",
+[ Parameter (Mandatory = $false, Position = 3 ) ] $password = "$Scriptpath\Requirements\Secret.Credential",
+[ Parameter (Mandatory = $false, Position = 4 ) ] $LogFile = "$Scriptpath\Logs\NaukriUpdateLogs.txt",
 [ Parameter (Mandatory = $false, Position = 5 ) ] $ResumePath = "$Scriptpath\Resume\Deepak Raghuwanshi.pdf"
 
 )

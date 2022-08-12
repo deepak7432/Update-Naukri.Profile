@@ -2,9 +2,9 @@
 Param 
 ( 
 
-[ Parameter (Mandatory = $false, Position = 1 ) ] $SaveResume = "C:\Users\siris\Desktop\Some\Selenium\Update Naukri Profile\Resume\Deepak Raghuwanshi.pdf",
+[ Parameter (Mandatory = $false, Position = 1 ) ] $SaveResume = "C:\deepak_workspace\Update-Naukri.Profile\Resume\Deepak Raghuwanshi.pdf",
 [ Parameter (Mandatory = $false, Position = 2 ) ] $DownloadResume = "https://tinyurl.com/ResumeofDeepak",
-[ Parameter (Mandatory = $false, Position = 3 ) ] $LogFile = "C:\Users\siris\Desktop\Some\Selenium\Update Naukri Profile\NaukriUpdateLogs.txt"
+[ Parameter (Mandatory = $false, Position = 3 ) ] $LogFile = "C:\deepak_workspace\Update-Naukri.Profile\NaukriUpdateLogs.txt"
 
 )
 
