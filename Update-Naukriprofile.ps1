@@ -243,10 +243,34 @@ Function Destroy-Instance{
 
 }
 
+Function Get-Resume{
+
+  [CmdletBinding()] 
+  Param 
+  ( 
+    [ Parameter (Mandatory = $false, Position = 1 ) ] $SaveResume = "C:\deepak_workspace\Update-Naukri.Profile\Resume\Deepak Raghuwanshi.pdf",
+    [ Parameter (Mandatory = $false, Position = 2 ) ] $DownloadResume = "https://tinyurl.com/ResumeofDeepak"
+  )
+
+    Try{
+        Invoke-WebRequest -UseBasicParsing -DisableKeepAlive -Uri "$DownloadResume" -OutFile $ResumePath -ErrorAction Stop; Write-host "Success"
+        Write-logs -LogLine "Success While Downloading Resume Path - $ResumePath, from - $DownloadResume"
+        #start-Sleep -Seconds 1
+    }
+    Catch{
+        Write-logs -LogLine "Error encountered While Downloading Resume $_"
+        
+    }
+
+}
+
 #endregion
 
 Write-Logs -LogLine "`n `nStarting Update Naukri Script #################################################################"
 #$password = Get-Content -Path "$password" -ErrorAction Stop
+
+#Download Latest Reume
+Get-Resume
 
 #region Main Flow
 $Instance = Create-Instance -IsChrome $False #launch Edge
