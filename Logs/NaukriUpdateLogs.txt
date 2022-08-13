@@ -1,0 +1,274 @@
+[13-08-22 02:44:25] 
+ 
+Starting Update Naukri Script ################################################################# 
+
+[13-08-22 02:44:27] Success While Downloading Resume Path - C:\deepak_workspace\Update-Naukri.Profile\Resume\Deepak Raghuwanshi.pdf, from - https://tinyurl.com/ResumeofDeepak 
+
+[13-08-22 02:44:29] Opening Edge 
+
+[13-08-22 02:44:30] Minimizing Browzer 
+
+[13-08-22 02:44:30] Loading Addreess- https://www.naukri.com/nlogin/login 
+
+[13-08-22 02:44:33] Page Validation Suceesfull - Jobseeker's Login: Search the Best Jobs available in India & Abroad - Naukri.com 
+
+[13-08-22 02:44:36] Login Suceess 
+
+[13-08-22 02:44:42] Error encountered While Update Profile- Update Failed, Unexpected Web Page - Jobseeker's Login: Search the Best Jobs available in India & Abroad - Naukri.com 
+
+[13-08-22 02:44:43] Browser Session Destroyed 
+
+[13-08-22 02:46:39] 
+ 
+Starting Update Naukri Script ################################################################# 
+
+[13-08-22 02:46:51] Opening Edge 
+
+[13-08-22 02:46:51] Minimizing Browzer 
+
+[13-08-22 02:47:27] Loading Addreess- https://www.naukri.com/nlogin/login 
+
+[13-08-22 02:47:30] Page Validation Suceesfull - Jobseeker's Login: Search the Best Jobs available in India & Abroad - Naukri.com 
+
+[13-08-22 02:47:32] Login Suceess 
+
+[13-08-22 02:54:38] Browser Session Destroyed 
+
+[13-08-22 02:54:47] 
+ 
+Starting Update Naukri Script ################################################################# 
+
+[13-08-22 02:54:49] Success While Downloading Resume Path - C:\deepak_workspace\Update-Naukri.Profile\Resume\Deepak Raghuwanshi.pdf, from - https://tinyurl.com/ResumeofDeepak 
+
+[13-08-22 02:54:51] Opening Edge 
+
+[13-08-22 02:54:51] Minimizing Browzer 
+
+[13-08-22 02:54:51] Loading Addreess- https://www.naukri.com/nlogin/login 
+
+[13-08-22 02:54:54] Page Validation Suceesfull - Jobseeker's Login: Search the Best Jobs available in India & Abroad - Naukri.com 
+
+[13-08-22 02:54:56] Login Suceess 
+
+[13-08-22 02:55:20] Page Validation Suceesfull - Home | Mynaukri 
+
+[13-08-22 02:55:22] Loading Addreess- https://my.naukri.com/Profile/edit?id=&altresid= 
+
+[13-08-22 02:55:24] Page Validation Suceesfull - Profile | Mynaukri 
+
+[13-08-22 02:55:26] Last Status - Today 
+
+[13-08-22 02:55:27] Update Profile 
+
+[13-08-22 02:55:27] Loading Addreess- https://my.naukri.com/Profile/edit?id=&altresid= 
+
+[13-08-22 02:55:29] Page Validation Suceesfull - Profile | Mynaukri 
+
+[13-08-22 02:55:31] Last Updated Resume On - Uploaded on Aug 13, 2022 
+
+[13-08-22 02:55:43] Failed to Updated Resume where - Final Status > Uploaded on Aug 13, 2022 
+
+[13-08-22 02:55:43] Current Status - Today 
+
+[13-08-22 02:55:45] Browser Session Destroyed 
+
+[13-08-22 02:55:45] Successfull Profile Update at Time - Today 
+
+[13-08-22 03:05:54] 
+ 
+Starting Update Naukri Script ################################################################# 
+
+[13-08-22 03:05:56] Success While Downloading Resume Path - C:\deepak_workspace\Update-Naukri.Profile\Resume\Deepak Raghuwanshi.pdf, from - https://tinyurl.com/ResumeofDeepak 
+
+[13-08-22 03:05:59] Opening Edge 
+
+[13-08-22 03:05:59] Minimizing Browzer 
+
+[13-08-22 03:05:59] Loading Addreess- https://www.naukri.com/nlogin/login 
+
+[13-08-22 03:06:01] Page Validation Suceesfull - Jobseeker's Login: Search the Best Jobs available in India & Abroad - Naukri.com 
+
+[13-08-22 03:06:04] Login Suceess 
+
+[13-08-22 03:06:28] Page Validation Suceesfull - Home | Mynaukri 
+
+[13-08-22 03:06:30] Loading Addreess- https://my.naukri.com/Profile/edit?id=&altresid= 
+
+[13-08-22 03:06:32] Page Validation Suceesfull - Profile | Mynaukri 
+
+[13-08-22 03:06:34] Last Status - Today 
+
+[13-08-22 03:06:35] Update Profile 
+
+[13-08-22 03:06:35] Loading Addreess- https://my.naukri.com/Profile/edit?id=&altresid= 
+
+[13-08-22 03:06:38] Page Validation Suceesfull - Profile | Mynaukri 
+
+[13-08-22 03:06:40] Last Updated Resume On - Uploaded on Aug 13, 2022 
+
+[13-08-22 03:06:52] Failed to Updated Resume where - Final Status > Uploaded on Aug 13, 2022 
+
+[13-08-22 03:06:52] Current Status - Today 
+
+[13-08-22 03:06:53] Browser Session Destroyed 
+
+[13-08-22 03:06:53] Successfull Profile Update at Time - Today 
+
+[13-08-22 03:12:02] 
+ 
+Starting Update Naukri Script ################################################################# 
+
+[13-08-22 03:12:05] Success While Downloading Resume Path - C:\deepak_workspace\Update-Naukri.Profile\Resume\Deepak Raghuwanshi.pdf, from - https://tinyurl.com/ResumeofDeepak 
+
+[13-08-22 03:12:06] Opening Edge 
+
+[13-08-22 03:12:07] Minimizing Browzer 
+
+[13-08-22 03:12:07] Loading Addreess- https://www.naukri.com/nlogin/login 
+
+[13-08-22 03:12:09] Page Validation Suceesfull - Jobseeker's Login: Search the Best Jobs available in India & Abroad - Naukri.com 
+
+[13-08-22 03:12:12] Login Suceess 
+
+[13-08-22 03:12:14] Page Validation Suceesfull - Home | Mynaukri 
+
+[13-08-22 03:12:16] Loading Addreess- https://my.naukri.com/Profile/edit?id=&altresid= 
+
+[13-08-22 03:12:19] Page Validation Suceesfull - Profile | Mynaukri 
+
+[13-08-22 03:12:21] Last Status - Today 
+
+[13-08-22 03:12:22] Update Profile 
+
+[13-08-22 03:12:22] Loading Addreess- https://my.naukri.com/Profile/edit?id=&altresid= 
+
+[13-08-22 03:12:25] Page Validation Suceesfull - Profile | Mynaukri 
+
+[13-08-22 03:12:27] Last Updated Resume On - Uploaded on Aug 13, 2022 
+
+[13-08-22 03:12:40] Failed to Updated Resume where - Final Status > Uploaded on Aug 13, 2022 
+
+[13-08-22 03:12:40] Current Status - Today 
+
+[13-08-22 03:12:41] Browser Session Destroyed 
+
+[13-08-22 03:12:41] Successfull Profile Update at Time - Today 
+
+[13-08-22 15:31:02] 
+ 
+Starting Update Naukri Script ################################################################# 
+
+[13-08-22 15:31:05] Success While Downloading Resume Path - C:\deepak_workspace\Update-Naukri.Profile\Resume\Deepak Raghuwanshi.pdf, from - https://tinyurl.com/ResumeofDeepak 
+
+[13-08-22 15:31:08] Opening Edge 
+
+[13-08-22 15:31:08] Minimizing Browzer 
+
+[13-08-22 15:31:08] Loading Addreess- https://www.naukri.com/nlogin/login 
+
+[13-08-22 15:31:10] Page Validation Suceesfull - Jobseeker's Login: Search the Best Jobs available in India & Abroad - Naukri.com 
+
+[13-08-22 15:31:13] Login Suceess 
+
+[13-08-22 15:31:15] Page Validation Suceesfull - Home | Mynaukri 
+
+[13-08-22 15:31:17] Loading Addreess- https://my.naukri.com/Profile/edit?id=&altresid= 
+
+[13-08-22 15:31:19] Page Validation Suceesfull - Profile | Mynaukri 
+
+[13-08-22 15:31:21] Last Status - Today 
+
+[13-08-22 15:31:22] Update Profile 
+
+[13-08-22 15:31:22] Loading Addreess- https://my.naukri.com/Profile/edit?id=&altresid= 
+
+[13-08-22 15:31:23] Page Validation Suceesfull - Profile | Mynaukri 
+
+[13-08-22 15:31:25] Last Updated Resume On - Uploaded on Aug 13, 2022 
+
+[13-08-22 15:31:38] Failed to Updated Resume where - Final Status > Uploaded on Aug 13, 2022 
+
+[13-08-22 15:31:38] Current Status - Today 
+
+[13-08-22 15:31:39] Browser Session Destroyed 
+
+[13-08-22 15:31:39] Successfull Profile Update at Time - Today 
+
+[13-08-22 15:33:05] 
+ 
+Starting Update Naukri Script ################################################################# 
+
+[13-08-22 15:33:11] Success While Downloading Resume Path - C:\deepak_workspace\Update-Naukri.Profile\Resume\Deepak Raghuwanshi.pdf, from - https://tinyurl.com/ResumeofDeepak 
+
+[13-08-22 15:33:19] Opening Edge 
+
+[13-08-22 15:33:19] Minimizing Browzer 
+
+[13-08-22 15:33:19] Loading Addreess- https://www.naukri.com/nlogin/login 
+
+[13-08-22 15:33:23] Page Validation Suceesfull - Jobseeker's Login: Search the Best Jobs available in India & Abroad - Naukri.com 
+
+[13-08-22 15:33:26] Login Suceess 
+
+[13-08-22 15:33:50] Page Validation Suceesfull - Home | Mynaukri 
+
+[13-08-22 15:33:52] Loading Addreess- https://my.naukri.com/Profile/edit?id=&altresid= 
+
+[13-08-22 15:33:56] Page Validation Suceesfull - Profile | Mynaukri 
+
+[13-08-22 15:33:58] Last Status - Today 
+
+[13-08-22 15:33:59] Update Profile 
+
+[13-08-22 15:33:59] Loading Addreess- https://my.naukri.com/Profile/edit?id=&altresid= 
+
+[13-08-22 15:33:59] Page Validation Suceesfull - Profile | Mynaukri 
+
+[13-08-22 15:34:01] Last Updated Resume On - Uploaded on Aug 13, 2022 
+
+[13-08-22 15:34:14] Failed to Updated Resume where - Final Status > Uploaded on Aug 13, 2022 
+
+[13-08-22 15:34:14] Current Status - Today 
+
+[13-08-22 15:34:15] Browser Session Destroyed 
+
+[13-08-22 15:34:15] Successfull Profile Update at Time - Today 
+
+[13-08-22 16:24:13] Task as been Scheduled at 8am for C:\deepak_workspace\Update-Naukri.Profile 
+
+[13-08-22 16:24:30] Task as been Scheduled at 8am for C:\deepak_workspace\Update-Naukri.Profile 
+
+[13-08-22 16:24:50] Task as been Scheduled at 8am for C:\deepak_workspace\Update-Naukri.Profile 
+
+[13-08-22 16:28:26] Task as been Scheduled at 8am for C:\deepak_workspace\Update-Naukri.Profile 
+
+[13-08-22 16:44:16] Task as been Scheduled at 13 August 2022 16:45:32 for C:\deepak_workspace\Update-Naukri.Profile 
+
+[13-08-22 16:44:29] Task as been Scheduled at 13 August 2022 16:45:32 for C:\deepak_workspace\Update-Naukri.Profile 
+
+[13-08-22 16:51:12] Task as been Scheduled at 13 August 2022 16:45:32 for C:\deepak_workspace\Update-Naukri.Profile 
+
+[13-08-22 16:51:43] Task as been Scheduled at 13 August 2022 16:45:32 for C:\deepak_workspace\Update-Naukri.Profile 
+
+[13-08-22 16:51:47] Task as been Scheduled at 13 August 2022 16:45:32 for C:\deepak_workspace\Update-Naukri.Profile 
+
+[13-08-22 16:52:37] Task as been Scheduled at 13 August 2022 16:45:32 for C:\deepak_workspace\Update-Naukri.Profile 
+
+[13-08-22 16:53:10] Task as been Scheduled at 13 August 2022 16:45:32 for C:\deepak_workspace\Update-Naukri.Profile 
+
+[13-08-22 16:54:30] Task as been Scheduled at 13 August 2022 16:55:32 for C:\deepak_workspace\Update-Naukri.Profile 
+
+[13-08-22 16:55:57] Task as been Scheduled at 13 August 2022 16:55:32 for C:\deepak_workspace\Update-Naukri.Profile 
+
+[13-08-22 16:56:11] Task as been Scheduled at 13 August 2022 16:55:32 for C:\deepak_workspace\Update-Naukri.Profile 
+
+[13-08-22 17:00:48] Task as been Scheduled at 13 August 2022 16:55:32 for C:\deepak_workspace\Update-Naukri.Profile 
+
+[13-08-22 17:03:32] Error encountered While Scheduling Job at 13 August 2022 16:55:32 For Script - C:\deepak_workspace\Update-Naukri.Profile\Update-Naukriprofile.ps1 No MSFT_ScheduledTask objects found with property 'TaskName' equal to 'Powershell_Task Script C:_deepak_workspace_Update-Naukri.Profile_Update-Naukriprofile.ps1'.  Verify the value of the property and retry. 
+
+[13-08-22 17:04:03] Error encountered While Scheduling Job at 13 August 2022 16:55:32 For Script - C:\deepak_workspace\Update-Naukri.Profile\Update-Naukriprofile.ps1 No MSFT_ScheduledTask objects found with property 'TaskName' equal to 'Powershell_Task Script C:_deepak_workspace_Update-Naukri.Profile_Update-Naukriprofile.ps1'.  Verify the value of the property and retry. 
+
+[13-08-22 17:05:11] Error encountered While Scheduling Job at 13 August 2022 16:55:32 For Script - C:\deepak_workspace\Update-Naukri.Profile\Update-Naukriprofile.ps1 No MSFT_ScheduledTask objects found with property 'TaskName' equal to 'Powershell_Task Script C:_deepak_workspace_Update-Naukri.Profile_Update-Naukriprofile.ps1'.  Verify the value of the property and retry. 
+
+[13-08-22 17:16:19] Error encountered While Scheduling Job at 13 August 2022 16:55:32 For Script - C:\deepak_workspace\Update-Naukri.Profile\Update-Naukriprofile.ps1 No matching MSFT_ScheduledTask objects found by CIM query for instances of the Root/Microsoft/Windows/TaskScheduler/MSFT_ScheduledTask class on the  CIM server: SELECT * FROM MSFT_ScheduledTask  WHERE ((TaskName LIKE 'Powershell Task Update-Naukriprofile[_]ps1')) AND ((TaskPath LIKE '\\Deepak[_]Naukri')). Verify query parameters and retry. 
+
