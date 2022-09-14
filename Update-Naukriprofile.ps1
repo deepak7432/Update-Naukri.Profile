@@ -114,7 +114,7 @@ Function Sign-In {
   }
     ($Instance.FindElementById('usernameField')).SendKeys("$Site_Username")
     ($Instance.FindElementById('passwordField')).SendKeys("$Site_Secretkey")
-    $Instance.FindElementByTagName('button').Click()
+    $Instance.FindElementByXPath('//*[@id="loginForm"]/div[2]/div[3]/div/button[1]').Click()
     Write-Logs -LogLine "Login Suceess"
     Return $True
 }
