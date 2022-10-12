@@ -4,7 +4,7 @@
 [CmdletBinding()] 
 Param 
 ( 
-[ Parameter (Mandatory = $false, Position = 0 ) ] $Scriptpath = 'C:\deepak_workspace\Update-Naukri.Profile',
+[ Parameter (Mandatory = $false, Position = 0 ) ] $Scriptpath = 'C:\deepak_workspace\Update-Naukri.Profile', ##Comment Below, If Need to pass manually in the Params
 [ Parameter (Mandatory = $false, Position = 1 ) ] $WebDriverdll = "$Scriptpath\Requirements\WebDriver.dll",
 [ Parameter (Mandatory = $false, Position = 2 ) ] $Username = "raghuwanshideepak79.dr@gmail.com",
 [ Parameter (Mandatory = $false, Position = 3 ) ] $password = "$Scriptpath\Requirements\Secret.Credential",
@@ -14,6 +14,8 @@ Param
 )
 
 Try{
+
+$Scriptpath = Split-Path $MyInvocation.MyCommand.Path ##Comment this, If Need to pass manually in the Params
 
 if(!$WebDriverdll -or !$Username -or !$password -or !$LogFile -or !$ResumePath ){
     Throw "Input Values not Correct `n 1. WebDriverdll - $WebDriverdll, `n 2. Username - $Username `n 3. password - $password, `n 4. LogFile - $LogFile, `n 5. ResumePath - $ResumePath."    
