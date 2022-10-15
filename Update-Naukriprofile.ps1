@@ -343,8 +343,10 @@ Try{
 Catch{
     Write-logs -LogLine "Error encountered While Update Profile- $_"
     try{ Destroy-Instance -Instance $Instance -ErrorAction Stop } catch{ "Error - $_ "}
+    try{git pull}catch{"Trying to pull the latest version from git"}
 }
 
 finally{
     "Logs Availble at Logpath - $LogFile"
+    
 }
