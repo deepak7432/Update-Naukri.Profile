@@ -4,339 +4,337 @@
 [CmdletBinding()] 
 Param 
 ( 
-[ Parameter (Mandatory = $false, Position = 0 ) ] $Scriptpath         = 'C:\deepak_workspace\Update-Naukri.Profile', ##Comment Below, If Need to pass manually in the Params
-[ Parameter (Mandatory = $false, Position = 1 ) ] $WebDriverdll       = "Requirements\WebDriver.dll",
-[ Parameter (Mandatory = $false, Position = 2 ) ] $Username           = "raghuwanshideepak79.dr@gmail.com",
-[ Parameter (Mandatory = $false, Position = 3 ) ] $password           = "Requirements\Secret.Credential",
-[ Parameter (Mandatory = $false, Position = 4 ) ] $LogFile            = "Logs\NaukriUpdateLogs.txt",
-[ Parameter (Mandatory = $false, Position = 5 ) ] $ResumePath         = "Resume\Deepak Raghuwanshi.pdf",
-[ Parameter (Mandatory = $false, Position = 6 ) ] [bool]$manul_path   = $false
+[ Parameter (Mandatory = $false, Position = 0 ) ] $Scriptpath = 'C:\deepak_workspace\Update-Naukri.Profile', ##Comment Below, If Need to pass manually in the Params
+[ Parameter (Mandatory = $false, Position = 1 ) ] $WebDriverdll = "$Scriptpath\Requirements\WebDriver.dll",
+[ Parameter (Mandatory = $false, Position = 2 ) ] $Username = "raghuwanshideepak79.dr@gmail.com",
+[ Parameter (Mandatory = $false, Position = 3 ) ] $password = "$Scriptpath\Requirements\Secret.Credential",
+[ Parameter (Mandatory = $false, Position = 4 ) ] $LogFile = "$Scriptpath\Logs\NaukriUpdateLogs.txt",
+[ Parameter (Mandatory = $false, Position = 5 ) ] $ResumePath = "$Scriptpath\Resume\Deepak Raghuwanshi.pdf"
+
 )
 
 Try{
 
-  ##Output Save to Script Stored Directory
-  if($manul_path -eq $false){ $Scriptpath = Split-Path $MyInvocation.MyCommand.Path }
+$Scriptpath = Split-Path $MyInvocation.MyCommand.Path ##Comment this, If Need to pass manually in the Params
 
-  $WebDriverdll = $Scriptpath+"\"+$WebDriverdll
-  $password = $Scriptpath+"\"+$password
-  $LogFile = $Scriptpath+"\"+$LogFile
-  $ResumePath = $Scriptpath+"\"+$ResumePath 
+if(!$WebDriverdll -or !$Username -or !$password -or !$LogFile -or !$ResumePath ){
+    Throw "Input Values not Correct `n 1. WebDriverdll - $WebDriverdll, `n 2. Username - $Username `n 3. password - $password, `n 4. LogFile - $LogFile, `n 5. ResumePath - $ResumePath."    
+}
 
-  if(!$WebDriverdll -or !$Username -or !$password -or !$LogFile -or !$ResumePath ){
-      Throw "Input Values not Correct `n 1. WebDriverdll - $WebDriverdll, `n 2. Username - $Username `n 3. password - $password, `n 4. LogFile - $LogFile, `n 5. ResumePath - $ResumePath."    
+$ErrorActionPreference = "Stop"
+
+Import-Module "$WebDriverdll" -ErrorAction Stop
+
+#region Function
+
+Function Write-logs {
+  [CmdletBinding()] 
+  Param 
+  ( 
+    [ Parameter (Mandatory = $true, Position = 0 ) ] [string]$LogLine,
+    [ Parameter (Mandatory = $false, Position = 1 ) ] $LogFilepath = $LogFile
+  )
+  
+  $formatter = $($("[{0:dd-MM-yy} {0:HH:mm:ss}]" -f (Get-Date))+" $LogLine `n")
+   Write-Host( $formatter  )
+  Add-content $LogFilepath -value $formatter -ErrorAction Stop
+  $formatter =@()
+
+}
+
+Function Create-Instance {
+  
+  [CmdletBinding()] 
+  Param 
+  ( 
+    [ Parameter (Mandatory = $false, Position = 0 ) ] [Bool] $IsChrome = $false,
+    [ Parameter (Mandatory = $false, Position = 1 ) ] [int]$WaitTimeinSec = 5,
+    [switch] $Help
+  )
+
+  if($Help)
+  {
+    Write-Output "Function to Load the Web Driver Instance, Set IsChrome param -eq $true for Chrome, Default is Edge Driver. `n 1. Edge >> Create-Instance, `n 2. Chrome >> Create-Instance -IsChrome $true"
+    return $Help
   }
 
-  $ErrorActionPreference = "Stop"
 
-  Import-Module "$WebDriverdll" -ErrorAction Stop
+  if($Name)
+  {
+    #Load Chrome Driver
+    $Instance = New-Object OpenQA.Selenium.Chrome.ChromeDriver -ErrorAction Stop;
+    Write-Logs -LogLine "Opening Chrome"
+  }
+  else
+  {
+    $Instance = New-Object OpenQA.Selenium.Edge.EdgeDriver -ErrorAction Stop;      
+    Write-Logs -LogLine "Opening Edge"
+  }
+  
+  #Set the Wait for the Element to load, Before throwing Exception
+  $Instance.Manage().Timeouts().ImplicitWait = (New-TimeSpan -Hours 0 -Minutes 0 -Seconds $WaitTimeinSec);
+  $Instance.manage().Window.minimize()
 
-  #region Function
+  Write-Logs -LogLine "Minimizing Browzer"
 
-  Function Write-logs {
-    [CmdletBinding()] 
-    Param 
-    ( 
-      [ Parameter (Mandatory = $true, Position = 0 ) ] [string]$LogLine,
-      [ Parameter (Mandatory = $false, Position = 1 ) ] $LogFilepath = $LogFile
-    )
+  return $Instance
+}
 
-    Add-content $LogFilepath -value $($("[{0:dd-MM-yy} {0:HH:mm:ss}]" -f (Get-Date))+" $LogLine `n") -ErrorAction Stop
+Function Open-Webpage {
+  
+  [CmdletBinding()] 
+  Param 
+  ( 
+    [ Parameter (Mandatory = $true, Position = 0 ) ] [string] $URL,
+    [ Parameter (Mandatory = $false, Position = 1 ) ] $Instance = $Instance,
+    [switch] $Help
+  )
 
+  if($Help)
+  {
+    Write-Output "Function to Load the Web Page or URL, Default is Edge Driver. `n 1. Edge >> Open-Webpage -URL 'https://tinyurl.com/DeepakRaghuwanshi/'"
+    return $Help
   }
 
-  Function Create-Instance {
-    
-    [CmdletBinding()] 
-    Param 
-    ( 
-      [ Parameter (Mandatory = $false, Position = 0 ) ] [Bool] $IsChrome = $false,
-      [ Parameter (Mandatory = $false, Position = 1 ) ] [int]$WaitTimeinSec = 5,
-      [switch] $Help
-    )
+  Write-Logs -LogLine "Loading Addreess- $URL"
+  $Instance.Navigate().GoToUrl("$URL")
 
-    if($Help)
-    {
-      Write-Output "Function to Load the Web Driver Instance, Set IsChrome param -eq $true for Chrome, Default is Edge Driver. `n 1. Edge >> Create-Instance, `n 2. Chrome >> Create-Instance -IsChrome $true"
-      return $Help
-    }
+  Return $true
+}
 
+Function Sign-In {
+  [CmdletBinding()] 
+  Param 
+  ( 
+    [ Parameter (Mandatory = $true, Position = 0 ) ] [string] $Site_Username,
+    [ Parameter (Mandatory = $true, Position = 1 ) ] [string] $Site_Secretkey,
+    [ Parameter (Mandatory = $true, Position = 2 ) ] $Instance = $Instance,
+    [switch] $Help
+  )
 
-    if($Name)
-    {
-      #Load Chrome Driver
-      $Instance = New-Object OpenQA.Selenium.Chrome.ChromeDriver -ErrorAction Stop;
-      Write-Logs -LogLine "Opening Chrome"
-    }
-    else
-    {
-      $Instance = New-Object OpenQA.Selenium.Edge.EdgeDriver -ErrorAction Stop;      
-      Write-Logs -LogLine "Opening Edge"
-    }
-    
-    #Set the Wait for the Element to load, Before throwing Exception
-    $Instance.Manage().Timeouts().ImplicitWait = (New-TimeSpan -Hours 0 -Minutes 0 -Seconds $WaitTimeinSec);
-    $Instance.manage().Window.minimize()
-
-    Write-Logs -LogLine "Minimizing Browzer"
-
-    return $Instance
+  if($Help)
+  {
+    Write-Output "Function to Sign in to the WebPage. `n 1. Edge >> Open-Webpage -URL 'https://tinyurl.com/DeepakRaghuwanshi/'"
+    return $Help
   }
-
-  Function Open-Webpage {
-    
-    [CmdletBinding()] 
-    Param 
-    ( 
-      [ Parameter (Mandatory = $true, Position = 0 ) ] [string] $URL,
-      [ Parameter (Mandatory = $false, Position = 1 ) ] $Instance = $Instance,
-      [switch] $Help
-    )
-
-    if($Help)
-    {
-      Write-Output "Function to Load the Web Page or URL, Default is Edge Driver. `n 1. Edge >> Open-Webpage -URL 'https://tinyurl.com/DeepakRaghuwanshi/'"
-      return $Help
-    }
-
-    Write-Logs -LogLine "Loading Addreess- $URL"
-    $Instance.Navigate().GoToUrl("$URL")
-
+    ($Instance.FindElementById('usernameField')).SendKeys("$Site_Username")
+    ($Instance.FindElementById('passwordField')).SendKeys("$Site_Secretkey")
+    $Instance.FindElementByXPath('//*[@id="loginForm"]/div[2]/div[3]/div/button[1]').Click()
+    Write-Logs -LogLine "Login Suceess"
     Return $true
+}
+
+Function Validate-Page {
+  [CmdletBinding()] 
+  Param 
+  ( 
+    [ Parameter (Mandatory = $true, Position = 0 ) ] [string] $PageTitle,
+    [ Parameter (Mandatory = $false, Position = 1 ) ] $Instance = $Instance,
+    [ Parameter (Mandatory = $false, Position = 2 ) ] [int] $Maxrun = 7,
+    [ Parameter (Mandatory = $false, Position = 3 ) ] [int] $Run = 2,
+    [ Parameter (Mandatory = $false, Position = 4 ) ] [Bool] $Ispass = $false
+  )
+
+  if($PageTitle -eq "" -or $PageTitle -eq $null)
+  {
+     
+      Write-Logs -LogLine "Page Validation Failed - $PageTitle"
+      Return $Ispass
   }
-
-  Function Sign-In {
-    [CmdletBinding()] 
-    Param 
-    ( 
-      [ Parameter (Mandatory = $true, Position = 0 ) ] [string] $Site_Username,
-      [ Parameter (Mandatory = $true, Position = 1 ) ] [string] $Site_Secretkey,
-      [ Parameter (Mandatory = $true, Position = 2 ) ] $Instance = $Instance,
-      [switch] $Help
-    )
-
-    if($Help)
-    {
-      Write-Output "Function to Sign in to the WebPage. `n 1. Edge >> Open-Webpage -URL 'https://tinyurl.com/DeepakRaghuwanshi/'"
-      return $Help
-    }
-      ($Instance.FindElementById('usernameField')).SendKeys("$Site_Username")
-      ($Instance.FindElementById('passwordField')).SendKeys("$Site_Secretkey")
-      $Instance.FindElementByXPath('//*[@id="loginForm"]/div[2]/div[3]/div/button[1]').Click()
-      Write-Logs -LogLine "Login Suceess"
-      Return $True
-  }
-
-  Function Validate-Page {
-    [CmdletBinding()] 
-    Param 
-    ( 
-      [ Parameter (Mandatory = $true, Position = 0 ) ] [string] $PageTitle,
-      [ Parameter (Mandatory = $false, Position = 1 ) ] $Instance = $Instance,
-      [ Parameter (Mandatory = $false, Position = 2 ) ] [int] $Maxrun = 7,
-      [ Parameter (Mandatory = $false, Position = 3 ) ] [int] $Run = 2,
-      [ Parameter (Mandatory = $false, Position = 4 ) ] [Bool] $Ispass = $False
-    )
-
-    if($PageTitle -eq "" -or $PageTitle -eq $null)
-    {
+  
+  While ($Run -le $Maxrun){
+  
+      $Run += 2
       
-        Write-Logs -LogLine "Page Validation Failed - $PageTitle"
-        Return $Ispass
-    }
-    
-    While ($Run -le $Maxrun){
-    
-        $Run += 2
-        
-        if($($Instance.Title) -like $($PageTitle+"*"))
-        {
-          Write-Logs -LogLine "Page Validation Suceesfull - $($Instance.Title)"
-          $Ispass = $true;
-          $Run = 10
-        }
-
-        Start-Sleep -Seconds 2;
-    }
-
-    Return $Ispass
-  }
-
-  Function Update-Profile{
-    [CmdletBinding()] 
-    Param 
-    ( 
-      [ Parameter (Mandatory = $true, Position = 0 ) ] $Instance = $Instance
-    )
-
-      ($Instance.FindElementsByXPath('//em[@class="icon edit"]')).Click();
-      Start-Sleep -Milliseconds 400;
-      $Instance.FindElementsById('saveBasicDetailsBtn').Click();
-
-      Write-Logs -LogLine "Update Profile"
-
-  }
-
-  Function Get-LastUpdate{
-
-    [CmdletBinding()] 
-    Param 
-    ( 
-      [ Parameter (Mandatory = $false, Position = 1 ) ] $Instance = $Instance,
-      [Switch] $Resume
-    )
-
-    if($Resume)
-    {
-      Return $($Instance.FindElementByXPath(('//*[contains(@class, "updateOn")]')).Text)
-    }
-    
-    Return $(($Instance.FindElementsByXPath('//span [@class="fw700"]')).Text)
-
-  }
-
-  Function Update-Resume {
-      
-    [CmdletBinding()] 
-    Param 
-    ( 
-      [ Parameter (Mandatory = $false, Position = 0 ) ] $Instance = $Instance,
-      [ Parameter (Mandatory = $false, Position = 1 ) ] $ResumePath = $ResumePath,
-      [ Parameter (Mandatory = $false, Position = 2 ) ] $MaxTime = 10
-    )
-
-    
-    $LastUpdate = Get-LastUpdate -Instance $Instance -Resume
-    Write-Logs -LogLine "Last Updated Resume On - $LastUpdate"
-
-    ($Instance.FindElementByXPath('//*[@id="attachCV"]') ).SendKeys("$ResumePath")
-
-    [int] $Time = 0
-
-    while($Time -le $MaxTime){
-      
-      $FinalStatus = Get-LastUpdate -Resume -Instance $Instance
-
-      if($FinalStatus-ne $LastUpdate){
-            Write-Logs -LogLine "Succefully Updated Resume On - $FinalStatus "; Return $True
+      if($($Instance.Title) -like $($PageTitle+"*"))
+      {
+        Write-Logs -LogLine "Page Validation Suceesfull - $($Instance.Title)"
+        $Ispass = $true;
+        $Run = 10
       }
 
       Start-Sleep -Seconds 2;
-      $Time += 2;
+  }
+
+  Return $Ispass
+}
+
+Function Update-Profile{
+  [CmdletBinding()] 
+  Param 
+  ( 
+    [ Parameter (Mandatory = $true, Position = 0 ) ] $Instance = $Instance
+  )
+
+    ($Instance.FindElementsByXPath('//*[@id="lazyResumeHead"]/div/div/div[1]/span[2]')).Click();
+    Start-Sleep -Milliseconds 400;
+    ($Instance.FindElementsByXPath('/html/body/div[6]/div[8]/div[2]/form/div[3]/div/button')).Click();
+    
+    Write-Logs -LogLine "Update Profile"
+
+}
+
+Function Get-LastUpdate{
+
+  [CmdletBinding()] 
+  Param 
+  ( 
+    [ Parameter (Mandatory = $false, Position = 1 ) ] $Instance = $Instance,
+    [Switch] $Resume
+  )
+
+   if($Resume)
+   {
+    Return $($Instance.FindElementByXPath(('//*[contains(@class, "typ-14Medium mod-date-val")]')).Text)
+   }
+   
+   Return $($Instance.FindElementByXPath(('//*[contains(@class, "updateOn typ-14Regular")]')).Text)
+    
+
+}
+
+Function Update-Resume {
+    
+  [CmdletBinding()] 
+  Param 
+  ( 
+    [ Parameter (Mandatory = $false, Position = 0 ) ] $Instance = $Instance,
+    [ Parameter (Mandatory = $false, Position = 1 ) ] $ResumePath = $ResumePath,
+    [ Parameter (Mandatory = $false, Position = 2 ) ] $MaxTime = 10
+  )
+
+  
+  $LastUpdate = Get-LastUpdate -Instance $Instance -Resume
+  Write-Logs -LogLine "Last Updated Resume On - $LastUpdate"
+
+  ($Instance.FindElementByXPath('//*[@id="attachCV"]') ).SendKeys("$ResumePath")
+
+  [int] $Time = 0
+
+  while($Time -le $MaxTime){
+    
+    $FinalStatus = Get-LastUpdate -Resume -Instance $Instance
+
+    if( ($FinalStatus-ne $LastUpdate) -or $FinalStatus -eq 'today' ){
+          Write-Logs -LogLine "Succefully Updated Resume On - $FinalStatus "; Return $True
     }
 
-    Write-Logs -LogLine "Failed to Updated Resume where - Final Status > $FinalStatus";
-
-    Return $false
-
+    Start-Sleep -Seconds 2;
+    $Time += 2;
   }
 
-  Function Destroy-Instance{
-    [CmdletBinding()] 
-    Param 
-    ( 
-      [ Parameter (Mandatory = $false, Position = 1 ) ] $Instance = $Instance,
-      [switch] $Help
-    )
-    
-    if($Help)
-    {
-      Write-Output "Function to Destroy Instance. `n 1. Destroy-Instance"
-      return $Help
+  Write-Logs -LogLine "Failed to Updated Resume where - Final Status > $FinalStatus";
+
+  Return $false
+
+}
+
+Function Destroy-Instance{
+  [CmdletBinding()] 
+  Param 
+  ( 
+    [ Parameter (Mandatory = $false, Position = 1 ) ] $Instance = $Instance,
+    [switch] $Help
+  )
+  
+  if($Help)
+  {
+    Write-Output "Function to Destroy Instance. `n 1. Destroy-Instance"
+    return $Help
+  }
+  
+  $Instance.Quit()
+  Write-Logs -LogLine "Browser Session Destroyed"
+  Return $true
+
+}
+
+Function Get-Resume{
+
+  [CmdletBinding()] 
+  Param 
+  ( 
+    [ Parameter (Mandatory = $false, Position = 1 ) ] $SaveResume = "C:\deepak_workspace\Update-Naukri.Profile\Resume\Deepak Raghuwanshi.pdf",
+    [ Parameter (Mandatory = $false, Position = 2 ) ] $DownloadResume = "https://tinyurl.com/ResumeofDeepak"
+  )
+
+    Try{
+        Invoke-WebRequest -UseBasicParsing -DisableKeepAlive -Uri "$DownloadResume" -OutFile $ResumePath -ErrorAction Stop; Write-host "Success"
+        Write-logs -LogLine "Success While Downloading Resume Path - $ResumePath, from - $DownloadResume"
+        #start-Sleep -Seconds 1
     }
-    
-    $Instance.Quit()
-    Write-Logs -LogLine "Browser Session Destroyed"
-    Return $true
+    Catch{
+        Write-logs -LogLine "Error encountered While Downloading Resume $_"
+        
+    }
 
-  }
+}
 
-  Function Get-Resume{
+#endregion
 
-    [CmdletBinding()] 
-    Param 
-    ( 
-      [ Parameter (Mandatory = $false, Position = 1 ) ] $SaveResume = "C:\deepak_workspace\Update-Naukri.Profile\Resume\Deepak Raghuwanshi.pdf",
-      [ Parameter (Mandatory = $false, Position = 2 ) ] $DownloadResume = "https://tinyurl.com/ResumeofDeepak"
-    )
+Write-Logs -LogLine "`n `nStarting Update Naukri Script #################################################################"
+#$password = Get-Content -Path "$password" -ErrorAction Stop
 
-      Try{
-          Invoke-WebRequest -UseBasicParsing -DisableKeepAlive -Uri "$DownloadResume" -OutFile $ResumePath -ErrorAction Stop; Write-host "Success"
-          Write-logs -LogLine "Success While Downloading Resume Path - $ResumePath, from - $DownloadResume"
-          #start-Sleep -Seconds 1
-      }
-      Catch{
-          Write-logs -LogLine "Error encountered While Downloading Resume $_"
-          
-      }
+#Download Latest Reume
+Get-Resume
 
-  }
+#region Main Flow
+$Instance = Create-Instance -IsChrome $False #launch Edge
 
-  #endregion
+Open-Webpage -URL "https://www.naukri.com/nlogin/login" -Instance $Instance #Open Naukri WebSite
 
-  Write-Logs -LogLine "`n `nStarting Update Naukri Script #################################################################"
-  #$password = Get-Content -Path "$password" -ErrorAction Stop
+if(Validate-Page -PageTitle "Jobseeker's Login:" -Instance $Instance) 
+{
+    #Check if Not Loggged Then Sign In 
+    Sign-In -Site_Username "$Username" -Site_Secretkey "$(Get-Content -Path "$password" -ErrorAction Stop)" -Instance $Instance; #$password = $null;
+}
 
-  #Download Latest Reume
-  Get-Resume
+if(!(Validate-Page -PageTitle "Home |" -Instance $Instance))
+{
+     #Check if Sign in Suceesfull
+     Throw "Update Failed, Unexpected Web Page - $($Instance.Title)"
+}
 
-  #region Main Flow
-  $Instance = Create-Instance -IsChrome $False #launch Edge
+Open-Webpage -URL "https://my.naukri.com/Profile/edit?id=&altresid=" -Instance $Instance #Open Profile
 
-  Open-Webpage -URL "https://www.naukri.com/nlogin/login" -Instance $Instance #Open Naukri WebSite
+if(!(Validate-Page -PageTitle "Profile |" -Instance $Instance))
+{
+     #Validate Profiel
+     Throw "Update Failed, Unexpected Web Page - $($Instance.Title)"
+}
 
-  if(Validate-Page -PageTitle "Jobseeker's Login:" -Instance $Instance) 
-  {
-      #Check if Not Loggged Then Sign In 
-      Sign-In -Site_Username "$Username" -Site_Secretkey "$(Get-Content -Path "$password" -ErrorAction Stop)" -Instance $Instance; #$password = $null;
-  }
+$Old_Time = Get-LastUpdate -Instance $Instance
+Write-Logs -LogLine "Last Status - $Old_Time"
 
-  if(!(Validate-Page -PageTitle "Home |" -Instance $Instance))
-  {
-      #Check if Sign in Suceesfull
-      Throw "Update Failed, Unexpected Web Page - $($Instance.Title)"
-  }
+Update-Profile -Instance $Instance; #Update Profile TimeStamp
 
-  Open-Webpage -URL "https://my.naukri.com/Profile/edit?id=&altresid=" -Instance $Instance #Open Profile
+Open-Webpage -URL "https://my.naukri.com/Profile/edit?id=&altresid=" -Instance $Instance #ReFresh Profile
 
-  if(!(Validate-Page -PageTitle "Profile |" -Instance $Instance))
-  {
-      #Validate Profiel
-      Throw "Update Failed, Unexpected Web Page - $($Instance.Title)"
-  }
+if(!(Validate-Page -PageTitle "Profile |" -Instance $Instance))
+{
+     #Validated Refreshed Profile Page
+     Throw "Update Failed, Unexpected Web Page - $($Instance.Title)"
+}
 
-  $Old_Time = Get-LastUpdate -Instance $Instance
-  Write-Logs -LogLine "Last Status - $Old_Time"
+Update-Resume -Instance $Instance;
 
-  Update-Profile -Instance $Instance; #Update Profile TimeStamp
+$Updated_Time = Get-LastUpdate -Instance $Instance
+Write-Logs -LogLine "Current Status - $Updated_Time"
 
-  Open-Webpage -URL "https://my.naukri.com/Profile/edit?id=&altresid=" -Instance $Instance #ReFresh Profile
+Destroy-Instance -Instance $Instance; #kills the Edge Instance.
 
-  if(!(Validate-Page -PageTitle "Profile |" -Instance $Instance))
-  {
-      #Validated Refreshed Profile Page
-      Throw "Update Failed, Unexpected Web Page - $($Instance.Title)"
-  }
+#endregion
 
-  Update-Resume -Instance $Instance;
+##Validate
+if($Updated_Time -eq "today" -or $Old_Time -ne $Updated_Time -or $Updated_Time -eq "Uploaded on $( (Get-Date).ToString("MMM dd, yyyy"))" ) 
+{
+    Write-Logs -LogLine "Successfull Profile Update at Time - $Updated_Time"    
 
-  $Updated_Time = Get-LastUpdate -Instance $Instance
-  Write-Logs -LogLine "Current Status - $Updated_Time"
-
-  Destroy-Instance -Instance $Instance; #kills the Edge Instance.
-
-  #endregion
-
-
-  ##Validate
-  if($Updated_Time -eq "today" -or $Old_Time -ne $Updated_Time)
-  {
-      Write-Logs -LogLine "Successfull Profile Update at Time - $Updated_Time"    
-  }
-  Else
-  {
-      Throw "Unable to Update as Last update was at $Old_Time | $Updated_Time" 
-  }
+}
+Else
+{
+    Throw "Unable to Update as Last update was at $Old_Time | $Updated_Time" 
+}
 
 }
 
@@ -348,5 +346,4 @@ Catch{
 
 finally{
     "Logs Availble at Logpath - $LogFile"
-    
 }
